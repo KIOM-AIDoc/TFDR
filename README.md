@@ -45,12 +45,12 @@
 </tbody>
 </table>
 
-## Dataset
-Raw data format extends PubTator data format.
+## Corpus
+The raw data format follows the PubTator data format extension, with each document separated by a new line. It comprises three sections for each document: Text, NER (Named Entity Recognition), and RE (Relation Extraction) information, as demonstrated below: 
 
-**Image inserts**
+**[Image inserts]**
 
-Processed files are derived from the raw data format, containing labels and texts without headers.
+Processed files are created from raw data, comprising labels and texts devoid of headers. The columns within the file are separated by tab delimiters.
 
 
 ## Codes
