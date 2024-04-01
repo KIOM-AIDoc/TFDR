@@ -48,6 +48,8 @@
 ## Dataset
 Raw data format extends PubTator data format.
 
+**Image inserts**
+
 Processed files are derived from the raw data format, containing labels and texts without headers.
 
 
