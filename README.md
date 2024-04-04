@@ -69,6 +69,7 @@ Python codes for named entity recognition
 - Transformers 4.3 or higher
 - Pandas 1.2 or higher
 - skikit-learn 1.4 or higher
+- seqeval 1.2 or higher
 
 ## Citation
 To be added
