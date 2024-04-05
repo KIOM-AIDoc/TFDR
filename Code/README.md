@@ -15,9 +15,9 @@ Please download and extract the pre-processed KSR or RE datasets available in th
 python run_ner_train.py \
     --model_fn \
     --train_fn \
-    --pretrained_model_name=dmis-lab/biobert-base-cased-v1.2 \
+    --pretrained_model_name=allenai/scibert_scivocab_uncased \
     --valid_ratio=.2 \
-    --batch_size_per_device=16 \
+    --batch_size_per_device=8 \
     --n_epochs=8 \
     --warmup_ratio=.5 \
     --max_length=128
