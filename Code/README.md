@@ -12,7 +12,7 @@ To be added
 Please download and extract the pre-processed KSR or RE datasets available in the corpus directory. Then, execute the following command to run the fine-tuning code with default arguments.
 
 ```
-python run_ner_train.py \
+python run_ksr_re_train.py \
     --model_fn \
     --train_fn \
     --pretrained_model_name=allenai/scibert_scivocab_uncased \
@@ -26,7 +26,7 @@ python run_ner_train.py \
 The execution of prediction and evaluation code proceeds as follows with default arguments:
 
 ```
-python run_ner_test.py \
+python run_ksr_re_test.py \
     --model_fn \
     --eval_fn \
     --output_fn \
