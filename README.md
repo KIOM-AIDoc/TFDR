@@ -37,8 +37,8 @@
     <td><b>Negative</b></td>
   </tr>
   <tr>
-    <td>919</td>
-    <td>141</td>
+    <td>924</td>
+    <td>142</td>
     <td>30</td>
     <td>13</td>
   </tr>
