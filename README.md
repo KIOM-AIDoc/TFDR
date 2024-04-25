@@ -48,7 +48,7 @@
 ## Corpus
 The raw data format follows the PubTator data format extension, with each document separated by a new line. It comprises three sections for each document: Text, NER (Named Entity Recognition), and RE (Relation Extraction) information, as demonstrated below: 
 
-**[Image inserts]**
+![1](https://github.com/KIOM-AIDoc/TFDR/assets/36286252/5c79ef66-9a6f-4215-a2cf-a59eaf561ec4)
 
 Processed files are created from raw data, comprising labels and texts devoid of headers. The columns within the file are separated by tab delimiters.
 
