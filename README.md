@@ -54,11 +54,11 @@ Processed files are created from raw data, comprising labels and texts devoid of
 
 
 ## Codes
-Python codes for key-sentence recognition or relation extraction
+Python codes for Key-Sentence Recognition (KSR) and Relation Extraction (RE)
 - run_ksr_re_train.py
 - run_ksr_re_test.py
   
-Python codes for named entity recognition
+Python codes for Named Entity Recognition (NER)
 - run_ner_train.py
 - run_ner_test.py
 
