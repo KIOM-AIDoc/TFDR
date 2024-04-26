@@ -1,6 +1,6 @@
 # TFDR
 
-**T**raditional **F**ormula-**D**isease **R**elationships (TFDR) is a manually annotated corpus, designed for the extraction of relationship between traditional formula (TF) and disease from abstracts in PubMed. The TFDR corpus comprises a total of 6,211 TF mentions and 7,166 disease mentions, along with 1,103 relationships between them, all of which are contained within 740 abstracts. To the best of our knowledge, the TFDR corpus represents the first of its kind.
+**T**raditional **F**ormula-**D**isease **R**elationships (TFDR) is a manually annotated corpus, designed for the extraction of relationship between traditional formula (TF) and disease from abstracts in PubMed. The TFDR corpus comprises a total of 6,211 TF mentions and 7,166 disease mentions, along with 1,109 relationships between them, all of which are contained within 740 abstracts. To the best of our knowledge, the TFDR corpus represents the first of its kind.
 
 
 ## Statistics
