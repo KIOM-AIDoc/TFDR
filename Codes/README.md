@@ -13,7 +13,8 @@ python run_ner_train.py \
     --pretrained_model_name=dmis-lab/biobert-v1.1 \
     --valid_ratio=.2 \
     --batch_size_per_device=16 \
-    --max_seq_len=30 \
+    --n_epochs=30 \
+    --max_seq_len=400 \
     --learning_rate=.5 \
     --adam_epsilon=128 \
     --device=cuda \
@@ -30,7 +31,7 @@ python run_ner_test.py \
     --output_fn \
     --device=cuda \
     --batch_size=16 \
-    --max_seq_len=200 \
+    --max_seq_len=400 \
     --seed=1234
 ```
 
