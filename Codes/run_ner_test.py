@@ -6,7 +6,7 @@ import copy
 import argparse
 import os
 
-from transformers import PreTrainedTokenizer, BertConfig, BertForTokenClassification
+from transformers import PreTrainedTokenizer, BertConfig, BertForTokenClassification, ElectraForTokenClassification, DebertaV2ForTokenClassification, DebertaForTokenClassification
 from tqdm import tqdm, trange
 from seqeval.metrics import precision_score, recall_score, f1_score, classification_report
 from dataclasses import dataclass
@@ -274,8 +274,6 @@ checkpoint = torch.load(init_config.path_model)
 train_config = checkpoint['config']
 init_config.model_name = train_config.model_name
 
-tokenizer = AutoTokenizer.from_pretrained(init_config.model_name)
-
 labels = ["B-Disease", "I-Disease", "B-Formula", "I-Formula", "O"]
 label2id = {label: i for i, label in enumerate(labels)}
 id2label = {i: label for label, i in label2id.items()}
@@ -289,8 +287,19 @@ np.random.seed(init_config.seed)
 config = BertConfig.from_pretrained(init_config.model_name, num_labels=len(label2id))
 config.update(init_config.__dict__)
 
-model = BertForTokenClassification.from_pretrained(config.model_name, config=config)
+
+if 'electra' in config.model_name:
+    model_loader = ElectraForTokenClassification
+elif 'deberta' in config.model_name:
+    model_loader = DebertaForTokenClassification
+    # model_loader = DebertaV2ForTokenClassification
+else:
+    model_loader = BertForTokenClassification
+
+model = model_loader.from_pretrained(config.model_name, config=config)
 model.cuda()
+
+tokenizer = AutoTokenizer.from_pretrained(init_config.model_name)
 
 dataset_test = load_data(init_config.test_data, tokenizer)
 

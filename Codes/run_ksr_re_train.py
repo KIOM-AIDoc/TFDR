@@ -11,7 +11,7 @@ import os
 
 from datasets import Dataset
 
-from transformers import BertForSequenceClassification
+from transformers import BertForSequenceClassification, ElectraForSequenceClassification, DebertaForSequenceClassification
 from transformers import AutoTokenizer
 from transformers import TrainingArguments
 from transformers import Trainer
@@ -25,11 +25,11 @@ def define_argparser():
     p = argparse.ArgumentParser()    
     p.add_argument('--model_fn', required=True)
     p.add_argument('--train_fn', required=True)
-    p.add_argument('--pretrained_model_name', type=str, default='allenai/scibert_scivocab_uncased')
-    p.add_argument('--valid_ratio', type=float, default=.1)
+    p.add_argument('--pretrained_model_name', type=str, default='allenai/scibert_scivocab_uncased')    
+    p.add_argument('--valid_ratio', type=float, default=.2)
     p.add_argument('--batch_size_per_device', type=int, default=8)
     p.add_argument('--n_epochs', type=int, default=8)
-    p.add_argument('--warmup_ratio', type=float, default=.2)
+    p.add_argument('--warmup_ratio', type=float, default=.5)
     p.add_argument('--max_length', type=int, default=128)
     config = p.parse_args()
 
@@ -69,7 +69,12 @@ def main(config):
     n_warmup_steps = int(n_total_iterations * config.warmup_ratio)
     print('#total_iterations =', n_total_iterations, '\n#warmup_steps =', n_warmup_steps)
 
-    model_loader = BertForSequenceClassification
+    if 'electra' in config.pretrained_model_name:
+        model_loader = ElectraForSequenceClassification
+    elif 'deberta' in config.pretrained_model_name:
+        model_loader = DebertaForSequenceClassification
+    else:     
+        model_loader = BertForSequenceClassification
     model = model_loader.from_pretrained(config.pretrained_model_name, num_labels=len(index_to_label), label2id=label_to_index, id2label=index_to_label)
     tokenizer = AutoTokenizer.from_pretrained(config.pretrained_model_name)
     

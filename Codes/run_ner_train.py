@@ -5,7 +5,7 @@ import os
 import random
 
 from transformers import AutoModel, AutoTokenizer
-from transformers import PreTrainedTokenizer, BertConfig, BertForTokenClassification
+from transformers import PreTrainedTokenizer, BertConfig, BertForTokenClassification, ElectraForTokenClassification, DebertaV2ForTokenClassification, DebertaForTokenClassification
 from transformers import AdamW
 from tqdm import tqdm, trange
 from seqeval.metrics import precision_score, recall_score, f1_score, classification_report
@@ -176,8 +176,6 @@ labels = ["B-Disease", "I-Disease", "B-Formula", "I-Formula", "O"]
 label2id = {label: i for i, label in enumerate(labels)}
 id2label = {i: label for label, i in label2id.items()}
 
-tokenizer = AutoTokenizer.from_pretrained(init_config.model_name)
-
 max_length = init_config.max_seq_len
 batch_size = init_config.batch_size
 
@@ -187,8 +185,37 @@ np.random.seed(init_config.seed)
 config = BertConfig.from_pretrained(init_config.model_name, num_labels=len(label2id))
 config.update(init_config.__dict__)
 
-model = BertForTokenClassification.from_pretrained(config.model_name, config=config)
+
+if 'electra' in config.model_name:
+    model_loader = ElectraForTokenClassification
+elif 'deberta' in config.model_name:
+    # model_loader = DebertaV2ForTokenClassification
+    model_loader = DebertaForTokenClassification
+else:
+    model_loader = BertForTokenClassification
+
+model = model_loader.from_pretrained(config.model_name, config=config)
 model.cuda()
+
+tokenizer = AutoTokenizer.from_pretrained(init_config.model_name)
+
+
+if 'electra' in config.model_name:
+    optimizer_grouped_parameters = [
+        {'params': model.electra.parameters(), 'lr': config.learning_rate / 100},
+        {'params': model.classifier.parameters(), 'lr': config.learning_rate}
+    ]
+elif 'deberta' in config.model_name:
+    optimizer_grouped_parameters = [
+        {'params': model.deberta.parameters(), 'lr': config.learning_rate / 100},
+        {'params': model.classifier.parameters(), 'lr': config.learning_rate}
+    ]
+else:
+    optimizer_grouped_parameters = [
+        {'params': model.bert.parameters(), 'lr': config.learning_rate / 100},
+        {'params': model.classifier.parameters(), 'lr': config.learning_rate}
+    ]
+
 
 dataset_train_vals = load_data(init_config.train_data, tokenizer)
 dic_dataset_train_vals = {}
@@ -245,10 +272,6 @@ valid_dataloader = DataLoader(
     collate_fn=collate_fn
 )
 
-optimizer_grouped_parameters = [
-    {'params': model.bert.parameters(), 'lr': config.learning_rate / 100 },
-    {'params': model.classifier.parameters(), 'lr': config.learning_rate }
-]
 optimizer = AdamW(optimizer_grouped_parameters, lr=config.learning_rate, eps=config.adam_epsilon)
 
 model.to(init_config.device)

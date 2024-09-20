@@ -10,7 +10,7 @@ import numpy as np
 
 import torch.nn.functional as F
 from transformers import AutoTokenizer
-from transformers import BertForSequenceClassification
+from transformers import BertForSequenceClassification, ElectraForSequenceClassification, DebertaForSequenceClassification
 from sklearn.metrics import precision_recall_fscore_support
 from sklearn.metrics import classification_report
 
@@ -57,7 +57,12 @@ def main(config):
 
     with torch.no_grad():
         tokenizer = AutoTokenizer.from_pretrained(train_config.pretrained_model_name)
-        model_loader = BertForSequenceClassification        
+        if 'electra' in train_config.pretrained_model_name:
+            model_loader = ElectraForSequenceClassification
+        elif 'deberta' in train_config.pretrained_model_name:
+            model_loader = DebertaForSequenceClassification
+        else:     
+            model_loader = BertForSequenceClassification        
         model = model_loader.from_pretrained(train_config.pretrained_model_name, num_labels=len(index_to_label))
         model.load_state_dict(bert_best)
 
