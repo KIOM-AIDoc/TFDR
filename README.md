@@ -72,4 +72,4 @@ Python codes for Named Entity Recognition (NER)
 - seqeval 1.2 or higher
 
 ## Citation
-To be added
+Yea, S., Jang, H., Kim, S. et al. Annotated corpus for traditional formula-disease relationships in biomedical articles. Sci Data 12, 26 (2025). https://doi.org/10.1038/s41597-025-04377-2
